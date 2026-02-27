@@ -1,0 +1,79 @@
+/*animação*/
+.bg {
+  position: fixed;
+  top: 0;
+  left: -50%;
+  right: -50%;
+  bottom: 0;
+
+  background-image: linear-gradient(
+    -60deg,
+    #7c5cff 50%,
+    #0f0f1a 50%
+  );
+
+  opacity: 0.35;
+  z-index: -1;
+
+  animation: slide 6s ease-in-out infinite alternate;
+}
+
+.bg2 {
+  background-image: linear-gradient(
+    -60deg,
+    #ff5fa2 50%,
+    #0f0f1a 50%
+  );
+
+  animation-direction: alternate-reverse;
+  animation-duration: 8s;
+  opacity: 0.25;
+}
+
+.bg3 {
+  background-image: linear-gradient(
+    -60deg,
+    #4cc9f0 50%,
+    #0f0f1a 50%
+  );
+
+  animation-duration: 10s;
+  opacity: 0.2;
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(10%);
+  }
+}
+
+@keyframes floatAI {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.movie-card {
+  animation: fadeUp 0.5s ease forwards;
+}

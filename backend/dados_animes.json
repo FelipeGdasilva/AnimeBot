@@ -1,0 +1,24 @@
+{
+  "animes": [
+    {
+      "title": "Bleach",
+      "description": "Ichigo Kurosaki, um adolescente que ganha poderes de Ceifador de Almas, deve proteger os humanos e guiar os espíritos para o além.",
+      "image": "https://cdn.myanimelist.net/images/anime/3/40451.jpg"
+    },
+    {
+      "title": "Naruto Shippuden",
+      "description": "Um jovem ninja que procura reconhecimento e sonha em tornar-se o Hokage.",
+      "image": "https://cdn.myanimelist.net/images/anime/1565/111305.jpg"
+    },
+    {
+      "title": "One Piece",
+      "description": "Luffy e a sua tripulação em busca do tesouro supremo para se tornar o Rei dos Piratas.",
+      "image": "https://cdn.myanimelist.net/images/anime/6/73245.jpg"
+    },
+    {
+      "title": "Death Note",
+      "description": "Um estudante encontra um caderno sobrenatural que lhe permite matar qualquer pessoa escrevendo o seu nome.",
+      "image": "https://cdn.myanimelist.net/images/anime/9/9453.jpg"
+    }
+  ]
+}

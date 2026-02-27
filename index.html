@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Animebot - Encontre o anime perfeito para você</title>
+
+    <link rel="stylesheet" href="src/css/variaveis.css" />
+    <link rel="stylesheet" href="src/css/reset.css" />
+    <link rel="stylesheet" href="src/css/styles.css" />
+    <link rel="stylesheet" href="src/css/animations.css" />
+    <link rel="stylesheet" href="src/css/responsivo.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/favicon-32x32.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- Background animado -->
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+
+    <main class="container">
+      <div class="main-content">
+        <!-- Header / Brand -->
+        <header class="brand-header">
+          <div class="container-logo">
+            <img
+              src="src/images/Assistente robô futurista iluminada.png"
+              alt="Assistente virtual AnimeBot"
+              class="robot-image"
+            />
+            <h1 class="brand-title">AnimeBot</h1>
+          </div>
+
+          <p class="brand-subtitle">
+            Seu assistente pessoal para encontrar o anime perfeito
+          </p>
+        </header>
+
+        <!-- Card de busca -->
+        <div class="search-card">
+          <div class="search-content">
+            <div class="input-container">
+              <textarea
+                id="mood-input"
+                rows="3"
+                placeholder="Descreva o anime que você quer assistir ou como está se sentindo..."
+                class="mood-input"
+              ></textarea>
+            </div>
+
+            <!-- Exemplos -->
+            <div class="examples">
+              <p class="examples-title">Exemplos:</p>
+              <ul class="examples-list">
+                <li>• Quero um anime de ação com lutas épicas</li>
+                <li>• Algo triste que faça chorar</li>
+                <li>• Um anime leve para relaxar depois do trabalho</li>
+              </ul>
+            </div>
+
+            <button id="search-button" class="search-button" disabled>
+              <span class="play-icon">▶</span>
+              Encontrar Animes
+            </button>
+          </div>
+        </div>
+
+        <!-- Resultados -->
+        <div id="results">
+          <h2>Animes recomendados pra você</h2>
+
+          <div id="movies-grid" class="movies-grid">
+            <!-- Cards de anime serão inseridos aqui via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="src/js/index.js"></script>
+  </body>
+</html>

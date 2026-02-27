@@ -1,0 +1,7 @@
+:root {
+  --primary-color: #7c5cff;    /* Um roxo vibrante */
+  --secondary-color: #00f2fe;  /* Um ciano neon */
+  --card-bg: rgba(23, 23, 33, 0.8);
+  --text-light: #f8f9fa;
+  --text-muted: #a0a0b8;
+}

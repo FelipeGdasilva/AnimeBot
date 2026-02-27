@@ -1,0 +1,164 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "animebot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "9c99f86b-33b2-4071-8e5c-9a5de496b504",
+      "name": "Webhook",
+      "webhookId": "91cdd808-7516-48ff-aa56-ef52267a5050"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $node[\"AI Agent\"].json[\"output\"] }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        592,
+        0
+      ],
+      "id": "303ee55e-e39d-448d-b54b-4b87157ca962",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\"Você é um guia de animes emocional.\n\nPASSO 1: Analise o que o usuário disse: {{ $node[\"Webhook\"].json[\"body\"][\"chatInput\"] }}.\n\nPASSO 2: > - Se o usuário citou um nome de anime, use a ferramenta 'buscar_anime' para ele.\n\nSe o usuário expressou uma emoção ou desejo (ex: 'quero rir', 'dia difícil'), ESCOLHA 3 nomes de animes que ajudem nessa emoção.\n\nPASSO 3: Use a ferramenta 'buscar_anime' para pesquisar os nomes que você escolheu. DICA: Você pode chamar a ferramenta várias vezes ou pesquisar os nomes um por um.\n\nPASSO 4: Retorne o JSON final com os dados coletados:\n{\n\"animes\": [ { \"title\": \"...\", \"description\": \"...\", \"image\": \"...\" } ]\n}\"\n\"IMPORTANTE: Retorne APENAS o JSON puro. NÃO use blocos de código markdown (```json). Comece a resposta diretamente com { e termine com }.\"",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        288,
+        0
+      ],
+      "id": "d852a6f9-cf91-4e18-b22e-de8a2baec521",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        160,
+        160
+      ],
+      "id": "72ac350b-a645-47a2-b538-087c8e2c21e7",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PfVC0hEKrMVDCLrR",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Utilize esta ferramenta para buscar informações de animes na API do Jikan. Ela retorna títulos, descrições e URLs de imagens. \"O parâmetro 'q' é obrigatório e deve conter o nome do anime que o usuário deseja encontrar.\"",
+        "url": "https://api.jikan.moe/v4/anime",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $fromAI(\"q\", \"O nome do anime para pesquisar\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        544,
+        192
+      ],
+      "id": "4e4b5d68-75c4-4824-ac86-1b792160d2f0",
+      "name": "buscar_anime"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar_anime": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "94e68377-db99-4c80-a9ab-6e5101a795e8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "46b3793a2beec396f954cd9520103b6a2178f6fb77968939cf16602e261fca89"
+  },
+  "id": "dOqjXVVdIqzJhMSGiTFMF",
+  "tags": []
+}
