@@ -1,6 +1,6 @@
 const input = document.getElementById("mood-input");
 const button = document.getElementById("search-button");
-const resultsContainer = document.getElementById("movies-grid");
+const resultsContainer = document.getElementById("movies-grid"); // Usaremos este como padrão
 const resultsSection = document.getElementById("results");
 
 input.addEventListener("input", () => {
@@ -15,10 +15,13 @@ button.addEventListener("click", async () => {
   button.innerText = "Buscando..."; 
   
   resultsSection.style.display = "block";
+
+  // 1. Limpa tudo e coloca a mensagem de IA
   resultsContainer.innerHTML = `
-    <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+    <div style="grid-column: 1/-1; text-align: center; color: #00f2ff; padding: 20px;">
       <div class="loading"></div>
-      <p style="color:white; margin-top: 20px;">Acessando banco de dados local...</p>
+      <p>🤖 <b>Nota do AnimeBot:</b> Nossa IA está em treinamento para te entender melhor.<br>
+      Enquanto isso, confira os destaques do nosso catálogo para o seu humor:</p>
     </div>
   `;
 
@@ -27,9 +30,7 @@ button.addEventListener("click", async () => {
     if (!response.ok) throw new Error("Erro na requisição");
 
     const objetoReal = await response.json();
-    console.log("Dados que o servidor enviou:", objetoReal); // <--- Veja isso no F12
-
-    // Lógica para encontrar a lista de animes
+    
     let animesParaRenderizar = [];
     if (objetoReal.animes && Array.isArray(objetoReal.animes)) {
         animesParaRenderizar = objetoReal.animes;
@@ -38,33 +39,32 @@ button.addEventListener("click", async () => {
     }
 
     if (animesParaRenderizar.length > 0) {
+      // 2. CHAMA A FUNÇÃO SEM LIMPAR O CONTAINER DE NOVO
       renderAnimes(animesParaRenderizar);
-    } else {
-      resultsContainer.innerHTML = "<p style='color:white'>A lista de animes está vazia no arquivo JSON.</p>";
-    }
+    } 
 
   } catch (error) {
-    resultsContainer.innerHTML = "<p style='color:white'>Erro ao conectar com o servidor. Verifique o terminal!</p>";
+    resultsContainer.innerHTML = "<p style='color:white'>Erro ao conectar. O servidor está rodando?</p>";
   } finally {
     button.disabled = false;
     button.innerText = "Encontrar Animes";
   }
 });
 
+// REMOVA O "resultsContainer.innerHTML = """ DE DENTRO DESTA FUNÇÃO:
 function renderAnimes(animes) {
-  resultsContainer.innerHTML = "";
+  // resultsContainer.innerHTML = "";  <-- COMENTE OU APAGUE ESSA LINHA!
+  
   animes.forEach((anime) => {
     const card = document.createElement("div");
     card.classList.add("movie-card", "fade-in");
-    const fallbackImage = "https://via.placeholder.com/300x450?text=Sem+Imagem";
-
     card.innerHTML = `
       <div class="movie-poster">
-        <img src="${anime.image || fallbackImage}" alt="${anime.title}" onerror="this.src='${fallbackImage}';">
+        <img src="${anime.image}" alt="${anime.title}">
       </div>
       <div class="movie-info">
-        <h3 class="movie-title">${anime.title || "Sem título"}</h3>
-        <p class="movie-overview">${anime.description || "Sem descrição."}</p>
+        <h3 class="movie-title">${anime.title}</h3>
+        <p class="movie-overview">${anime.description}</p>
       </div>
     `;
     resultsContainer.appendChild(card);
