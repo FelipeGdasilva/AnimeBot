@@ -1,1 +1,15 @@
-node_modules
+# Sistema
+desktop.ini
+Thumbs.db
+
+# Dependências (Essencial para não travar o Git)
+node_modules/
+__pycache__/
+env/
+venv/
+
+# Configurações do VS Code
+.vscode/
+
+# Logs
+*.log
